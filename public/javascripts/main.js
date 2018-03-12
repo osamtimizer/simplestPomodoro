@@ -1,6 +1,7 @@
 import $ from 'jquery';
 
-var remain = 60 * 40 * 1000;
+var remain = 60 * 25 * 1000;
+var interval = 60 * 5 * 1000;
 var timer;
 
 $(() => {

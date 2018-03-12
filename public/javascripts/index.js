@@ -9,8 +9,19 @@ var config = {
 };
 firebase.initializeApp(config);
 
+const auth = firebase.auth();
 
 $(() => {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      //user is logged in
+      const userName = user.displayName;
+      $("#username").text(userName);
+    } else {
+      //user isn't logged in
+    }
+  });
+
   $("button.auth").click((event) => {
     //authentication settings
     var provider = new firebase.auth.GoogleAuthProvider();
@@ -20,9 +31,10 @@ $(() => {
       var user = result.user;
 
       //redirect to main app page
-      location.href = "./main.html";
+      //location.href = "./main.html";
     }).catch((error) => {
       console.error("Error: Authentication failed with ", error.message);
+      $("p#error_message").text(error.message);
     });
 
   });
