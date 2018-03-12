@@ -13,6 +13,7 @@ const auth = firebase.auth();
 
 $(() => {
   auth.onAuthStateChanged((user) => {
+    $("p#error_message").text();
     if (user) {
       //user is logged in
       const displayName= user.displayName;
@@ -27,13 +28,23 @@ $(() => {
         $("div.body").html(text);
       }).catch((err) => {
         console.error("Error: ", err);
+        $("p#error_message").text(err.message);
       });
+      $("button#logout").show();
 
     } else {
       //user isn't logged in
+      $("div.body").html('<button class="auth">auth</button>');
+      initializeComponent();
+      $("#username").text();
+      $("button#logout").hide();
     }
   });
 
+  initializeComponent();
+});
+
+let initializeComponent = () => {
   $("button.auth").click((event) => {
     //authentication settings
     var provider = new firebase.auth.GoogleAuthProvider();
@@ -42,13 +53,14 @@ $(() => {
       var token = result.credential.accessToken;
       var user = result.user;
 
-      //redirect to main app page
-      //location.href = "./main.html";
-    }).catch((error) => {
-      console.error("Error: Authentication failed with ", error.message);
-      $("p#error_message").text(error.message);
+    }).catch((err) => {
+      console.error("Error: Authentication failed with ", err.message);
+      $("p#error_message").text(err.message);
     });
-
   });
-});
+
+  $("button#logout").click((event) => {
+    auth.signOut();
+  });
+}
 
