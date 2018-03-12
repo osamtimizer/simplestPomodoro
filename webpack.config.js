@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     index: './public/javascripts/index.js',
     main: './public/javascripts/main.js',
+    pomodoro: './public/javascripts/pomodoro.js',
     isAuth: './public/javascripts/isAuth.js'
   },
   output: {

@@ -15,8 +15,20 @@ $(() => {
   auth.onAuthStateChanged((user) => {
     if (user) {
       //user is logged in
-      const userName = user.displayName;
-      $("#username").text(userName);
+      const displayName= user.displayName;
+      const displayText= "logged in as: " + displayName;
+      $("#username").text(displayText);
+
+      fetch("pomodoro.html").then((res) => {
+        console.log("Fetch is called");
+        return res.text();
+      }).then((text) => {
+        console.log(text);
+        $("div.body").html(text);
+      }).catch((err) => {
+        console.error("Error: ", err);
+      });
+
     } else {
       //user isn't logged in
     }
